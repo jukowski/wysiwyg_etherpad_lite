@@ -21,7 +21,8 @@ function wysiwyg_etherpad_lite_field_formatter_info() {
 }
 
 function etherpad_init() {
-	require_once("etherpad-lite-client/etherpad-lite-client.php");
+	$path = libraries_get_path("etherpad-lite-client");
+	require_once($path."/etherpad-lite-client.php");
 }
 
 function etherpad_get_client() {
@@ -54,7 +55,7 @@ function wysiwyg_etherpad_lite_enrich_form(&$form, &$form_state) {
 				'#attributes' => array('id' => array('etherpad_gid')),
 				"#default_value" => $egid,
 	);
-	if ($nid) {
+	if (isset($nid)) {
 		$form["etherpad_nid"] = array(
 					"#type" => "hidden",
 					'#attributes' => array('id' => array('etherpad_nid')),
@@ -78,7 +79,7 @@ function wysiwyg_etherpad_lite_get_egid($nid) {
 }
 
 function wysiwyg_etherpad_lite_node_presave($node) {
-	if (property_exists($node, "etherpad_gid")) {
+	if (property_exists($node, "etherpad_gid") && isset($node->nid) && $node->nid!=null) {
 		$oldegid = wysiwyg_etherpad_lite_get_egid($node->nid);
 		if (!isset($oldegid) || strlen($oldegid)==0) {
 			db_insert("etherpad_groups")->fields(array('nid'=> $node->nid, 'egid' => $node->etherpad_gid))->execute();
@@ -149,12 +150,12 @@ function etherpad_config_form($form, &$form_state) {
 	$form["etherpad_base_url"] = array(
 		"#type" => "textfield",
 		"#title" => "Etherpad API URL",
-    	'#default_value' =>   variable_get('etherpad_base_url' , 'http://localhost:9001/api'),
+    	'#default_value' =>   variable_get('etherpad_base_url' , 'http://localhost:9001'),
 	);
 	$form["etherpad_api_key"] = array(
 			"#type" => "textfield",
 			"#title" => "Etherpad API Key",
-	    	'#default_value' =>   variable_get('etherpad_api_key' , 'kwarc_planetary'),
+	    	'#default_value' =>   variable_get('etherpad_api_key' , 'PASTE CONTENTS OF APIKEY.TXT'),
 	);
 	$form["test"] = array(
 			"#type" => "button",

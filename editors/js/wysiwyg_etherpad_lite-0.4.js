@@ -25,7 +25,7 @@ Drupal.wysiwyg.editor.attach.etherpad_lite = function(context, params, settings)
 		    'showLineNumbers'  : true,
 		    'userName'	 : settings.user,
 			});
-	  if (nid.length>0) {
+	  if (typeof(nid)!="undefined" && nid.length>0) {
 		  $(obj).pad({'getContents': {
 			  "format": "txt",
 			  "callback": function(txt) {

@@ -1,1 +1,14 @@
 This is module integrates Etherpad Lite into Drupal 7 WYSIWYG module.
+
+= Installation instructions =
+
+cd sites/all/modules/
+git clone git://github.com/jucovschi/wysiwyg_etherpad_lite.git
+cd ..
+mkdir -p libraries
+cd libraries
+git clone git://github.com/TomNomNom/etherpad-lite-client.git
+git clone git://github.com/johnyma22/etherpad-lite-jquery-plugin.git
+drush dl wysiwyg libraries
+drush en wysiwyg_etherpad_lite
+

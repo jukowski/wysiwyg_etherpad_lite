@@ -70,10 +70,12 @@ function wysiwyg_etherpad_lite_etherpad_lite_version($editor) {
 *   theme name.
 */
 function wysiwyg_etherpad_lite_etherpad_lite_themes($editor, $profile) {
-	$ether_mod = drupal_get_path("module", "wysiwyg_etherpad_lite");
-	drupal_add_css($ether_mod."/css/wysiwyg_etherpad_lite.css", array("absolute"=>true));
-	$js = $ether_mod."/etherpad-lite-jquery-plugin/js/etherpad.js";
+	$js = $editor['library path'] . '/js/etherpad.js';
 	drupal_add_js($js);	
+
+//	$ether_mod = drupal_get_path("module", "wysiwyg_etherpad_lite");
+//	drupal_add_css($ether_mod."/css/wysiwyg_etherpad_lite.css", array("absolute"=>true));
+//	$js = $ether_mod."/etherpad-lite-jquery-plugin/js/etherpad.js";
 	/**
 	 * TODO: just a STUB 
 	 */
