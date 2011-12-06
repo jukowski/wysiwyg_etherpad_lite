@@ -30,4 +30,8 @@ VERY IMPORTANT (hopefully temporary hack):
 Next steps:
  * go to configuration of you wysiwyg (?q=admin/config/content/wysiwyg)
  * add etherpad to some of the input formats
- 
+ * to enable several users working on the same node in the same time you should use the 
+   Local Editable formatter for the text fields i.e. go to the Manage Display tab on your
+   content type (e.g. ?q=admin/structure/types/manage/article/display) and choose 
+   Local Editable for the text field you want to have etherpad-lite enabled
+ * remember that in Etherpad-Lite one author can have only one instance of the pad. 
