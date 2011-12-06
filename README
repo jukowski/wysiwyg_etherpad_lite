@@ -1,6 +1,8 @@
 This is module integrates Etherpad Lite into Drupal 7 WYSIWYG module.
 
 = Installation instructions =
+ * change directory to the root of the drupal installation containing 
+   index.php. Then execute following commands:
 
 cd sites/all/modules/
 git clone git://github.com/jucovschi/wysiwyg_etherpad_lite.git
@@ -12,3 +14,20 @@ git clone git://github.com/johnyma22/etherpad-lite-jquery-plugin.git
 drush dl wysiwyg libraries
 drush en wysiwyg_etherpad_lite
 
+ * go to configuration of your drupal installation (?q=admin/config/content/etherpad-lite)
+ * check that the etherpad http url is correct
+ * paste the APIKEY.TXT of your etherpad installation into the Etherpad API field
+ * click test to see if connection could be established (should show a big green success)
+ * then save configuration
+
+VERY IMPORTANT (hopefully temporary hack):
+ * open settings.json from your etherpad installation
+ * change the line containing "defaultPadText" : "Welcome ..."
+   to "defaultPadText" : ""
+
+ * congratulations, you have configured etherpad-lite integration with Drupal
+
+Next steps:
+ * go to configuration of you wysiwyg (?q=admin/config/content/wysiwyg)
+ * add etherpad to some of the input formats
+ 
