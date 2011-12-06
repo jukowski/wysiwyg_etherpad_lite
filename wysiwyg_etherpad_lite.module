@@ -90,6 +90,30 @@ function wysiwyg_etherpad_lite_node_presave($node) {
 	}
 }
 
+function wysiwyg_etherpad_lite_getContent() {
+	if (!isset($_POST["padid"])) {
+		echo json_encode(array("status"=>"fail", "msg" => "No content set"));
+		return;
+	}
+	$padid = $_POST["padid"];
+	try {
+		etherpad_init();
+		$client = etherpad_get_client();
+		if ($client == null) {
+			echo json_encode(array("status"=>"fail", "msg" => "could not initialize "));		
+			return;
+		}
+		$content = $client->getText($padid)->text;
+	} catch (Exception $e) {
+		echo json_encode(array("status"=>"fail", "msg" => "see logs"));
+		watchdog("error", $e);
+		return;
+	}
+	
+	echo json_encode(array("status"=>"ok", "content"=>$content));
+}
+
+
 function wysiwyg_etherpad_lite_setContent() {
 	if (!isset($_POST["content"])) {
 		echo json_encode(array("status"=>"fail", "msg" => "No content set"));
@@ -120,12 +144,16 @@ function wysiwyg_etherpad_lite_setContent() {
 }
 
 function wysiwyg_etherpad_lite_menu() {
-	$items['localedit/sync/%node'] = array(
+	$items['localedit/get'] = array(
+		    'page callback' => 'wysiwyg_etherpad_lite_getContent',
+		    'type' => MENU_NORMAL_ITEM,
+		    'access callback' => true,
+	);
+	$items['localedit/set/%node'] = array(
 		    'page callback' => 'wysiwyg_etherpad_lite_setContent',
-		    'access arguments' => array('access administration pages'),
 		    'type' => MENU_NORMAL_ITEM,
 		    'access callback' => array('node_access'),
-	    	'access arguments' => array('update', 2),
+		    'access arguments' => array('update', 2),
 	);
 	$items["admin/config/content/etherpad-lite"] = array (
 		'title' => 'Etherpad-Lite configurations',
@@ -210,7 +238,6 @@ function local_edit_form_submit($form, &$form_state) {
 	$lang = $form["#node"]->language;
 	$node = &$form["#node"];
 	$fld = &$node->$field;
-	dpm($fld);
 	$fld[$lang]["0"]["value"]=$form_state["values"][$field][$lang]["0"]["value"];
 	node_save($node);
 }
@@ -226,7 +253,7 @@ function wysiwyg_etherpad_lite_theme($existing, $type, $theme, $path) {
 
 function wysiwyg_etherpad_lite_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
 	$element = array();
-	$update = node_access("update", entity);
+	$update = node_access("update", $entity);
 	
 	switch ($display['type']) {
 		// This formatter simply outputs the field as text and with a color.
