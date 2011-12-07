@@ -12,7 +12,7 @@
  * get read or readwrite access to it. 	 
  */
 
-function wysiwyg_etherpad_lite_schema() {
+function etherpad_schema() {
 	$schema['etherpad_groups'] = array(
     'description' => 'Maps nodes to etherpad groups.', 
     'fields' => array(

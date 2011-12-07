@@ -1,0 +1,6 @@
+name = Etherpad Integration
+description = "Wysiwyg editor plugin that integrates source view syntax highlighting"
+dependencies[] = wysiwyg
+dependencies[] = libraries
+package = "User interface"
+core = 7.x

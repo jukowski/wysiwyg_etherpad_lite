@@ -9,7 +9,7 @@
 /**
  * Implementation of hook_editor().
  */
-function wysiwyg_etherpad_lite_etherpad_lite_editor() {
+function etherpad_etherpad_lite_editor() {
    $editor['etherpad_lite'] = array(
     'title' => 'etherpad_lite editor',
     'vendor url' => 'https://github.com/Pita/etherpad-lite',
@@ -23,14 +23,14 @@ function wysiwyg_etherpad_lite_etherpad_lite_editor() {
         ),
       ),
     ),
-    'version callback' => 'wysiwyg_etherpad_lite_etherpad_lite_version',
-    'themes callback' => 'wysiwyg_etherpad_lite_etherpad_lite_themes',
-    'load callback' => 'wysiwyg_etherpad_lite_etherpad_lite_load',
-    'settings callback' => 'wysiwyg_etherpad_lite_etherpad_lite_settings',
-    'plugin callback' => 'wysiwyg_etherpad_lite_etherpad_lite_plugins',
+    'version callback' => 'etherpad_etherpad_lite_version',
+    'themes callback' => 'etherpad_etherpad_lite_themes',
+    'load callback' => 'etherpad_etherpad_lite_load',
+    'settings callback' => 'etherpad_etherpad_lite_settings',
+    'plugin callback' => 'etherpad_etherpad_lite_plugins',
     'versions' => array(
       '0.4' => array(
-        'js files' => array('wysiwyg_etherpad_lite-0.4.js'),
+        'js files' => array('etherpad-0.4.js'),
       ),
     ),
   );
@@ -46,7 +46,7 @@ function wysiwyg_etherpad_lite_etherpad_lite_editor() {
 * @return
 *   The installed editor version.
 */
-function wysiwyg_etherpad_lite_etherpad_lite_version($editor) {
+function etherpad_etherpad_lite_version($editor) {
 	$library = $editor['library path'] . '/js/etherpad.js';
 	if (!file_exists($library)) {
 		return;
@@ -69,12 +69,12 @@ function wysiwyg_etherpad_lite_etherpad_lite_version($editor) {
 *   An array of theme names. The first returned name should be the default
 *   theme name.
 */
-function wysiwyg_etherpad_lite_etherpad_lite_themes($editor, $profile) {
+function etherpad_etherpad_lite_themes($editor, $profile) {
 	$js = $editor['library path'] . '/js/etherpad.js';
 	drupal_add_js($js);	
 
-//	$ether_mod = drupal_get_path("module", "wysiwyg_etherpad_lite");
-//	drupal_add_css($ether_mod."/css/wysiwyg_etherpad_lite.css", array("absolute"=>true));
+//	$ether_mod = drupal_get_path("module", "etherpad");
+//	drupal_add_css($ether_mod."/css/etherpad.css", array("absolute"=>true));
 //	$js = $ether_mod."/etherpad-lite-jquery-plugin/js/etherpad.js";
 	/**
 	 * TODO: just a STUB 
@@ -90,7 +90,7 @@ function wysiwyg_etherpad_lite_etherpad_lite_themes($editor, $profile) {
 * @param $library
 *   The internal library name (array key) to use.
 */
-function wysiwyg_etherpad_lite_etherpad_lite_load($editor, $library) {
+function etherpad_etherpad_lite_load($editor, $library) {
 }
 
 /**
@@ -107,7 +107,7 @@ function wysiwyg_etherpad_lite_etherpad_lite_load($editor, $library) {
 *   A settings array to be populated in
 *   Drupal.settings.wysiwyg.configs.{editor}
 */
-function wysiwyg_etherpad_lite_etherpad_lite_settings($editor, $config, $theme) {
+function etherpad_etherpad_lite_settings($editor, $config, $theme) {
 	$settings = array();
 	$settings["jspath"]=url("<front>").$editor['library path'];
 	
@@ -118,7 +118,7 @@ function wysiwyg_etherpad_lite_etherpad_lite_settings($editor, $config, $theme) 
 	return $settings;
 }
 
-function wysiwyg_etherpad_lite_etherpad_lite_plugins($editor) {
+function etherpad_etherpad_lite_plugins($editor) {
   return array(
     'default' => array(
       //'buttons' => $plugins,
